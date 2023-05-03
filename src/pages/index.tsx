@@ -14,24 +14,23 @@ const Home = () => {
   const { colorCode, setColorCode, brightness, setBrightness, calcColorCode } = useColorBrightness()
 
   return (
-    <main className='flex flex-col min-h-screen justify-center'>
+    <main className={`flex flex-col min-h-screen justify-center ${inter.className}`}>
 
-      <div className={`flex flex-col grow items-center justify-center ${inter.className}`}>
+      <div className='flex flex-col grow items-center justify-center'>
         <Title title='カラーコードの明るさを調整するアプリ' />
-        <Spacer size={30} />
+        <Spacer size={20} />
 
         <div className='flex flex-col space-y-5'>
           <TextField id='color_code' label='カラーコード' value={colorCode} onChange={setColorCode} />
           <Slider id='brightness' label='明るさ' value={brightness} onChange={setBrightness} />
         </div>
 
-        <Spacer size={30} />
-        <Title title='計算結果' />
-        <Spacer size={30} />
+        <Spacer size={20} />
 
         <div className='flex flex-col space-y-5 items-center'>
           {
             calcColorCode ? <>
+              <Title title='計算結果' />
               <ColorPreview size={100} colorCode={calcColorCode} />
               <Title title={calcColorCode} />
               <Button text='コピーする' action={() => { navigator.clipboard.writeText(calcColorCode) }} />
