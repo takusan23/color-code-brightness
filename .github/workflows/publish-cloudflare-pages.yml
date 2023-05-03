@@ -1,0 +1,39 @@
+# GitHub Actions から Cloudflare Pages へ公開
+
+# 名前
+name: Publish Cloudflare Pages
+
+# 起動条件。pushと手動起動
+on:
+  push:
+  workflow_dispatch:
+
+# やらせること
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Node.js インストール
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.13.0
+
+      # 依存関係
+      - name: Package install
+        run: npm i
+      
+      # 書き出し
+      - name: Build page
+        run: npx next build && npx next export 
+
+      # 公開
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: $${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: color-code-brightness
+          directory: out
