@@ -22,7 +22,7 @@ const Home = () => {
 
         <div className='flex flex-col space-y-5'>
           <TextField id='color_code' label='カラーコード' value={colorCode} onChange={setColorCode} />
-          <Slider id='brightness' label='明るさ' value={brightness} onChange={setBrightness} />
+          <Slider id='brightness' label='明るさ' max={200} value={brightness} onChange={setBrightness} />
         </div>
 
         <Spacer size={20} />

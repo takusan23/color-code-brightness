@@ -11,3 +11,8 @@
 - クローンする
 - クローンしたフォルダでターミナルを開き、最初だけ `npm i` をする
 - `npm run dev`する
+
+## 本番ビルド
+
+静的書き出しなら、`next build && next export`で`out`フォルダに成果物が出力されるので、  
+これを`Netlify`なり`Cloudflare Pages`なんかで公開すればいいと思います。

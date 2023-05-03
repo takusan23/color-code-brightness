@@ -25,10 +25,10 @@ const useColorBrightness = () => {
             const red = (dec >> 16) // 16ビット 動かすだけ
             const green = (dec >> 8 & 0xFF) // 8ビット動かし 下から 2バイト 取り出す
             const blue = (dec & 0xFF) // 下から 2バイト 取り出すだけ
-            // かける
-            const calcRed = Math.floor(red * progress)
-            const calcGreen = Math.floor(green * progress)
-            const calcBlue = Math.floor(blue * progress)
+            // かける。0xFFを超えないように
+            const calcRed = Math.min(0xFF, Math.floor(red * progress))
+            const calcGreen = Math.min(0xFF, Math.floor(green * progress))
+            const calcBlue = Math.min(0xFF, Math.floor(blue * progress))
             // カラーコードに戻す
             const hexRed = calcRed.toString(16).padStart(2, '0')
             const hexGreen = calcGreen.toString(16).padStart(2, '0')
