@@ -7,6 +7,7 @@ import Slider from '@/components/Slider'
 import useColorBrightness from '@/hooks/useColorBrightness'
 import ColorPreview from '@/components/ColorPreview'
 import Button from '@/components/Button'
+import Head from 'next/head'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,37 +15,43 @@ const Home = () => {
   const { colorCode, setColorCode, brightness, setBrightness, calcColorCode } = useColorBrightness()
 
   return (
-    <main className={`flex flex-col min-h-screen justify-center ${inter.className}`}>
+    <>
+      <Head>
+        <title>カラーコードの明るさを調整するアプリ</title>
+      </Head>
 
-      <div className='flex flex-col grow items-center justify-center'>
-        <Title title='カラーコードの明るさを調整するアプリ' />
-        <Spacer size={20} />
+      <main className={`flex flex-col min-h-screen justify-center ${inter.className}`}>
 
-        <div className='flex flex-col space-y-5'>
-          <TextField id='color_code' label='カラーコード' value={colorCode} onChange={setColorCode} />
-          <Slider id='brightness' label='明るさ' max={200} value={brightness} onChange={setBrightness} />
+        <div className='flex flex-col grow items-center justify-center'>
+          <Title title='カラーコードの明るさを調整するアプリ' />
+          <Spacer size={20} />
+
+          <div className='flex flex-col space-y-5'>
+            <TextField id='color_code' label='カラーコード' value={colorCode} onChange={setColorCode} />
+            <Slider id='brightness' label='明るさ' max={200} value={brightness} onChange={setBrightness} />
+          </div>
+
+          <Spacer size={20} />
+
+          <div className='flex flex-col space-y-5 items-center'>
+            {
+              calcColorCode ? <>
+                <Title title='計算結果' />
+                <ColorPreview size={100} colorCode={calcColorCode} />
+                <Title title={calcColorCode} />
+                <Button text='コピーする' action={() => { navigator.clipboard.writeText(calcColorCode) }} />
+              </> : <>
+                <Title title={calcColorCode ?? '変換に失敗しました'} />
+              </>
+            }
+          </div>
         </div>
 
-        <Spacer size={20} />
-
-        <div className='flex flex-col space-y-5 items-center'>
-          {
-            calcColorCode ? <>
-              <Title title='計算結果' />
-              <ColorPreview size={100} colorCode={calcColorCode} />
-              <Title title={calcColorCode} />
-              <Button text='コピーする' action={() => { navigator.clipboard.writeText(calcColorCode) }} />
-            </> : <>
-              <Title title={calcColorCode ?? '変換に失敗しました'} />
-            </>
-          }
+        <div className='flex flex-col items-center py-1'>
+          <Button text='GitHub' action='https://github.com/takusan23/color-code-brightness' />
         </div>
-      </div>
-
-      <div className='flex flex-col items-center py-1'>
-        <Button text='GitHub' action='https://github.com/takusan23/color-code-brightness' />
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
 
